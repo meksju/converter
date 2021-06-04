@@ -121,7 +121,6 @@ class App extends React.Component {
                     <Row className={'justify-content-md-center'}>
                         <Col xs sm md lg="3">
                             <Form.Group >
-                                <Form.Label>Currency to exchange</Form.Label>
                                 <Typeahead
                                     id="basic-typeahead-single"
                                     labelKey={option => `${option.name} ${option.code}`}
@@ -133,11 +132,22 @@ class App extends React.Component {
                                 />
                             </Form.Group>
                         </Col>
+                        <Col xs sm md lg="2">
+                            <InputGroup className="mb-2">
+                                <FormControl aria-label="Amount (to the nearest dollar)"
+                                             type="number"
+                                             onChange={e => this.changeValue(e)}
+                                             value={this.state.given_amount}
+                                             placeholder="Specify amount"/>
+
+                            </InputGroup>
+                        </Col>
                         <Col xs sm md lg="1">
+                            <Button variant="outline-primary" className="swap" onClick={this.convert}><FontAwesomeIcon
+                                icon={faRetweet}/></Button>
                         </Col>
                         <Col xs sm md lg="3">
                             <Form.Group>
-                                <Form.Label>Currency to receive</Form.Label>
                                 <Typeahead
                                     id="basic-typeahead-single"
                                     labelKey={option => `${option.name} ${option.code}`}
@@ -149,24 +159,10 @@ class App extends React.Component {
                                 />
                             </Form.Group>
                         </Col>
-                    </Row>
-                    <Row className={'justify-content-md-center'}>
-                        <Col xs sm md lg="3">
-                            <InputGroup className="mb-2">
-                                <FormControl aria-label="Amount (to the nearest dollar)"
-                                             type="number"
-                                             onChange={e => this.changeValue(e)}
-                                             value={this.state.given_amount}/>
-                            </InputGroup>
-                        </Col>
-                        <Col xs sm md lg="1">
-                            <Button variant="outline-primary" className="swap" onClick={this.convert}><FontAwesomeIcon
-                                icon={faRetweet}/></Button>
-                        </Col>
-                        <Col xs sm md lg='3'>
+                        <Col xs sm md lg='2'>
                             <InputGroup className="mb-2">
                                 <FormControl disabled
-                                            aria-label="Amount (to the nearest dollar)"
+                                             aria-label="Amount (to the nearest dollar)"
                                              type="number"
                                              value={this.state.received_amount}/>
                             </InputGroup>

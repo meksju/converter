@@ -5,7 +5,8 @@ const http = require('http'),
     cookieParser = require('cookie-parser'),
     logger = require('morgan'),
     mongoose = require('mongoose'),
-    cors = require('cors');
+    cors = require('cors'),
+  axios = require('axios');
 
 const PORT = 8001;
 
@@ -21,12 +22,29 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
 app.use(express.static(__dirname + '/public'));
 
-mongoose.connect('mongodb://128.1.0.151/converter', {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect('mongodb://192.168.0.102/converter', {useNewUrlParser: true, useUnifiedTopology: true});
 
 require('./models/Currency');
 require('./services/remoteAPIService');
 
+
+
+
 const Currency = mongoose.model('Currency');
+
+if(process.argv[2] === 'fill'){
+    axios.get('https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json')
+        .then(function (response) {
+            response.data.forEach((element) => {
+                const currency = new Currency({
+                    name: element.txt,
+                    rate: element.rate,
+                    code: element.cc
+                });
+                currency.save();
+            });
+        });
+}
 
 Currency.exists({code: 'UAH'}, function(err, result) {
     if (err) {

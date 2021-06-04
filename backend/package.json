@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "first_start": "node ./bin/www fill",
     "start": "node ./bin/www",
     "server": "node src/server.js"
   },
