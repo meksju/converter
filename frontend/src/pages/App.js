@@ -139,7 +139,6 @@ class App extends React.Component {
                                              onChange={e => this.changeValue(e)}
                                              value={this.state.given_amount}
                                              placeholder="Specify amount"/>
-
                             </InputGroup>
                         </Col>
                         <Col xs sm md lg="1">

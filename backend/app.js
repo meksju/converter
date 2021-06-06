@@ -32,7 +32,12 @@ require('./services/remoteAPIService');
 
 const Currency = mongoose.model('Currency');
 
-if(process.argv[2] === 'fill'){
+ let count = 0;
+Currency.countDocuments({}, function (err, c) {
+    count = c;
+});
+
+if(process.argv[2] === 'fill' && count > 0){
     axios.get('https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json')
         .then(function (response) {
             response.data.forEach((element) => {
